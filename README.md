@@ -1,0 +1,1 @@
+# prevent-duplicate-tabs
