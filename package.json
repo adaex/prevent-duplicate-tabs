@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "dev": "npm run reset && tsc -w",
+    "build": "tsc",
+    "reset": "mkdir -p dist && rm -rf dist/*.* && cp -r manifest.json icon/* dist"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.242",
+    "typescript": "^5.1.6"
+  }
+}

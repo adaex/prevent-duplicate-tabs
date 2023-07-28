@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "removeComments": true,
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}
