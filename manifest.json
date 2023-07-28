@@ -7,7 +7,7 @@
     "128": "icon_128.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "service_worker.js"
   },
   "permissions": ["tabs", "webNavigation"]
 }
