@@ -13,12 +13,13 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
   log('chrome.tabs.onRemoved', tabId, removeInfo);
   delete TABS[tabId];
 });
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  log('chrome.tabs.onUpdated', tabId, changeInfo, tab);
-  if (!TABS[tabId]) return;
-  Object.assign(TABS[tabId], tab);
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
+  log('chrome.tabs.onUpdated', tabId, changeInfo, tabInfo);
+  const tab = TABS[tabId];
+  if (!tab) return;
+  Object.assign(tab, tabInfo);
+  if (changeInfo.status === 'complete') tab.first = false;
   if (changeInfo.url) checkDuplicate(tabId, changeInfo.url);
-  if (changeInfo.status === 'complete') TABS[tabId].first = false;
 });
 
 chrome.webNavigation.onBeforeNavigate.addListener(details => {
@@ -33,7 +34,7 @@ function checkDuplicate(tabId: number, tabUrl: string) {
   const tab = TABS[tabId];
   if (!tabId || !tabUrl || !tab) return;
 
-  const duplicateTab = findDuplicateTab(tabId, tabUrl, tab.openerTabId ?? -1);
+  const duplicateTab = findDuplicateTab(tabId, tabUrl);
   if (duplicateTab?.id) {
     chrome.tabs.update(duplicateTab.id, { active: true });
 
@@ -42,13 +43,13 @@ function checkDuplicate(tabId: number, tabUrl: string) {
   }
 }
 
-function findDuplicateTab(id: number, url: string, openerTabId: number) {
+function findDuplicateTab(id: number, url: string) {
   const urls = [url];
   CONFIGS.ignoreQueryPrefix.forEach(i => {
     if (url.startsWith(i)) urls.push(url.split('?')[0]);
   });
   for (const tab of Object.values(TABS)) {
-    if (tab.id !== id && tab.id !== openerTabId && tab.url && urls.includes(tab.url)) return tab;
+    if (tab.id !== id && tab.url && urls.includes(tab.url)) return tab;
   }
 }
 
