@@ -5,7 +5,7 @@
     "init": "mkdir -p dist && rm -rf dist/*.* && cp -r manifest.json icon/* dist"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.242",
-    "typescript": "^5.1.6"
+    "@types/chrome": "^0.0.269",
+    "typescript": "^5.5.4"
   }
 }

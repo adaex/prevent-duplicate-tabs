@@ -10,5 +10,6 @@
     "service_worker": "./service_worker.js",
     "type": "module"
   },
+  "action": {},
   "permissions": ["tabs", "webNavigation"]
 }
